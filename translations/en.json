@@ -1,0 +1,8 @@
+{
+    "ARDUINO_CONNECTED": "Arduino connected successfully!",
+    "ARDUINO_DISCONNECTED": "Arduino disconnected!",
+    "LOADING": "Loading &hellip;",
+    "ARDUINO_WAITING_CONNECTION": "Waiting for connection...",
+    "ARDUINO_WAITING_DATA": "Waiting...",
+    "ARDUINO_STARTING": "Starting..."
+}

@@ -1,0 +1,94 @@
+.MMM-ArduPort .x-small	{ font-size: 15px; line-height: 20px; }
+.MMM-ArduPort .small	{ font-size: 20px; line-height: 25px; }
+.MMM-ArduPort .medium	{ font-size: 30px; line-height: 35px; }
+.MMM-ArduPort .large	{ font-size: 65px; line-height: 65px; }
+.MMM-ArduPort .x-large	{ font-size: 75px; line-height: 75px; letter-spacing: -3px; }
+
+.MMM-ArduPort .row {
+    position: relative;
+    padding: 1px;
+    border-bottom: solid 1px #222;
+    min-height: 35px;
+    min-width: 300px;
+}
+
+.MMM-ArduPort .name-label {
+    display: block;
+    margin-left: 30px;
+    margin-right: 60px;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 25px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.MMM-ArduPort .loading {
+	  color: #666666;
+}
+
+.MMM-ArduPort .sensor-description {
+    font-size: 16px;
+    font-weight: 400;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 18px;
+    margin-bottom: 6px;
+    margin-left: 30px;
+    /*text-transform: uppercase;*/
+    text-align: left;
+}
+
+.MMM-ArduPort .port-data,
+.MMM-ArduPort .port-loading,
+.MMM-ArduPort .port-error {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 400;
+    display: block;
+    white-space: nowrap;
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    line-height: 18px;
+    margin-top: 4px;
+}
+
+.MMM-ArduPort .sensor-error {
+    color: #be0e0e;
+}
+
+.MMM-ArduPort .port-data.value-waiting {
+    color: #7f7f7f;
+}
+
+.MMM-ArduPort .port-data.value-starting {
+    color: #7f7f7f;
+}
+
+.MMM-ArduPort .port-data.value-max {
+    color: #ff0019;
+}
+.MMM-ArduPort .port-data.value-highest {
+    color: #ff5a44;
+}
+.MMM-ArduPort .port-data.value-high {
+    color: #e8ff19;
+}
+.MMM-ArduPort .port-data.value-normal {
+    color: #f8dd70;
+}
+.MMM-ArduPort .port-data.value-low {
+    color: #a3ea80;
+}
+.MMM-ArduPort .port-data.value-lowest {
+    color: #00ff19;
+}
+.MMM-ArduPort .port-data.value-min {
+    color: #ffffff;
+}

@@ -1,0 +1,20 @@
+{
+    "name": "mmmarduport",
+    "version": "1.0.0",
+    "description": "MagicMirror Module for serial communicating",
+    "main": "MMM-ArduPort.js",
+    "repository": {
+        "type": "git"
+    },
+    "keywords": [
+        "MagicMirror",
+        "Module",
+        "Arduino",
+        "SerialPort"
+    ],
+    "author": "Furkan Türkal",
+    "license": "MIT",
+    "dependencies": {
+        "python-shell": "latest"
+    }
+}
