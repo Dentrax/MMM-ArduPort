@@ -16,11 +16,11 @@ Module.register("MMM-ArduPort", {
         displayIcons: true,
 	      iconSize: 'small',
 		    labelSize: 'medium',
-        showDescription: true,
+        showDescription: false,
         useColors: true,
         sensor: {
             description: null,
-            maxValue: 40,
+            maxValue: null,
             maxFormat: null,
             highestValue: null,
             highestFormat: null,
