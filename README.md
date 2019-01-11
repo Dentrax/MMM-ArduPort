@@ -414,6 +414,12 @@ void loop() {
 3. Re-open the MagicMirror again
 4. Connect Arduino to PC again
 ```
+
+## Special Thanks
+
+- [Michael Teeuw](https://github.com/MichMich) for creating the awesome [MagicMirror²](https://github.com/MichMich/MagicMirror/tree/develop) project that made this module possible.
+- [Jeff Clarke](https://github.com/jclarke0000/MMM-MyCommute) for creating awesome module design (that i use in this project) and inspires me to do this module.
+
 ## License
 
 ### The MIT License (MIT)
