@@ -1,3 +1,6 @@
+#__pycache__
+arduport/__pycache__
+
 # Logs
 logs
 *.log
