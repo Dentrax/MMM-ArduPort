@@ -1,7 +1,7 @@
 {
     "name": "mmmarduport",
     "version": "1.0.0",
-    "description": "MagicMirror Module for serial communicating",
+    "description": "MagicMirror Module for serial communicating with Arduino",
     "main": "MMM-ArduPort.js",
     "repository": {
         "type": "git"

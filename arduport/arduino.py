@@ -14,6 +14,8 @@ import time
 import json
 import re
 
+from arduport import to_node
+
 from threading import Thread
 
 rgxData = re.compile("[\[][a-zA-Z0-9-].*[\:][a-zA-Z0-9-].*[\:][a-zA-Z0-9-].*[\]]")
@@ -66,9 +68,10 @@ class Arduino(object):
         # Get string between '[' and ']' for safe parsing using Regex
         # Format must be in [X:X:X]
         # Example: [Test:Name:Value]
-        match = re.search(rgxData, data)
-        print(match.groups)
+        # TODO: Add support for Serial.print() using Regex groups()
+        match = re.match(rgxData, data)
         if match:
+            data = data[1:-1]
             case, name, value = data.split(":")
             to_node(case.lower(), {"name": name, "data": value})
 
@@ -83,11 +86,3 @@ class Arduino(object):
                 break
 
             time.sleep(0.1)
-
-def to_node(type, message):
-    try:
-        print(json.dumps({type: message}))
-    except Exception:
-        pass
-
-    sys.stdout.flush()

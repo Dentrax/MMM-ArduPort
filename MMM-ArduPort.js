@@ -1,3 +1,10 @@
+// ====================================================
+// MMM-ArduPort Copyright(C) 2019 Furkan Türkal
+// This program comes with ABSOLUTELY NO WARRANTY; This is free software,
+// and you are welcome to redistribute it under certain conditions; See
+// file LICENSE, which is part of this source code package, for details.
+// ====================================================
+
 Module.register("MMM-ArduPort", {
 
     logPrefix: '[MMM-ArduPort]:: ',
@@ -13,12 +20,18 @@ Module.register("MMM-ArduPort", {
         useColors: true,
         sensor: {
             description: null,
-            valuePrefix: null,
-            valuePostfix: null,
+            maxValue: 40,
+            maxFormat: null,
             highestValue: null,
+            highestFormat: null,
             highValue: null,
+            highFormat: null,
             lowValue: null,
+            lowFormat: null,
             lowestValue: null,
+            lowestFormat: null,
+            minValue: null,
+            minFormat: null,
             error: null
         },
         developerMode: false
@@ -59,17 +72,22 @@ Module.register("MMM-ArduPort", {
 
         self.log(notification);
         self.log(JSON.stringify(payload, null, 4));
-        switch(notification){
 
+        switch(notification){
         case 'status':
             if(payload.name == 'setup'){
                 if(payload.data == 'starting'){
                     self.log("[socketNotificationReceived::status]: starting");
+                    this.isArduinoConnected = true;
                     this.isArduinoStarting = true;
                 } else if (payload.data == 'started'){
                     self.log("[socketNotificationReceived::status]: started");
                     this.isArduinoStarting = false;
                     this.isArduinoStarted = true;
+                } else if (payload.data == 'failed'){
+                    self.log("[socketNotificationReceived::status]: failed");
+                    this.isArduinoStarting = false;
+                    this.isArduinoStarted = false;
                 }
             }
             if(payload.name == 'connect'){
@@ -125,26 +143,50 @@ Module.register("MMM-ArduPort", {
             val.innerHTML = "({0}) ".format(value);
 
             if (this.config.useColors){
-                if (value <= sensor.maxValue && value >= sensor.minValue) {
-                    if (value <= sensor.maxValue){
-                        val.innerHTML += "MAXIMUM";
-                        val.classList.add("value-max");
-                    } else if (value >= sensor.highestValue){
-                        val.innerHTML += "CRITICAL";
-                        val.classList.add("value-highest");
-                    } else if (value >= sensor.highValue){
-                        val.innerHTML += "EMERGENCY";
-                        val.classList.add("value-high");
-                    } else if (value >= sensor.lowValue){
-                        val.innerHTML += "OK";
-                        val.classList.add("value-low");
-                    } else if (value >= sensor.lowestValue){
-                        val.innerHTML += "OK";
-                        val.classList.add("value-lowest");
-                    } else if (value >= sensor.minValue){
-                        val.innerHTML += "OK";
-                        val.classList.add("value-min");
+                if (value >= sensor.maxValue){
+                    if (sensor.maxFormat != null) {
+                        val.innerHTML = sensor.maxFormat.format(value);
+                    } else {
+                        val.innerHTML = value;
                     }
+                    val.classList.add("value-max");
+                } else if (value >= sensor.highestValue){
+                        if (sensor.highestFormat != null) {
+                            val.innerHTML = sensor.highestFormat.format(value);
+                        } else {
+                            val.innerHTML = value;
+                        }
+                    val.classList.add("value-highest");
+                } else if (value >= sensor.highValue){
+                    if (sensor.highFormat != null) {
+                        val.innerHTML = sensor.highFormat.format(value);
+                    } else {
+                            val.innerHTML = value;
+                    }
+                    val.classList.add("value-high");
+                } else if (value >= sensor.lowValue){
+                    if (sensor.lowFormat != null) {
+                        val.innerHTML = sensor.lowFormat.format(value);
+                    } else {
+                        val.innerHTML = value;
+                    }
+                    val.classList.add("value-low");
+                } else if (value >= sensor.lowestValue){
+                    if (sensor.lowestFormat != null) {
+                        val.innerHTML = sensor.lowestFormat.format(value);
+                    } else {
+                        val.innerHTML = value;
+                    }
+                    val.classList.add("value-lowest");
+                } else if (value >= sensor.minValue){
+                    if (sensor.minFormat != null) {
+                        val.innerHTML = sensor.minFormat.format(value);
+                    } else {
+                        val.innerHTML = value;
+                    }
+                    val.classList.add("value-min");
+                } else {
+                    val.innerHTML += "UNKNOWN";
                 }
             }
         } else {

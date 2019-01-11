@@ -29,8 +29,6 @@ def to_node(type, message):
 
     sys.stdout.flush()
 
-to_node("debug", 'SerialPort shell started...')
-to_node("debug", 'Waiting Ardunio to connect on port...')
 
 # https://stackoverflow.com/a/14224477/5685796
 def get_serial_ports():
@@ -97,5 +95,9 @@ def start_scanner():
 
         time.sleep(1)
 
-scanner = threading.Thread(target = start_scanner)
-scanner.start()
+if __name__ == '__main__':
+    to_node("debug", 'SerialPort shell started...')
+    to_node("debug", 'Waiting Ardunio to connect on port...')
+
+    scanner = threading.Thread(target = start_scanner)
+    scanner.start()
