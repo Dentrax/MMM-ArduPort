@@ -1,6 +1,13 @@
 #!/usr/bin/python
 # coding: utf8
 
+# ====================================================
+# MMM-ArduPort Copyright(C) 2019 Furkan Türkal
+# // This program comes with ABSOLUTELY NO WARRANTY; This is free software,
+# and you are welcome to redistribute it under certain conditions; See
+# file LICENSE, which is part of this source code package, for details.
+# ====================================================
+
 import os
 import sys
 import time
@@ -24,9 +31,6 @@ def to_node(type, message):
 
 to_node("debug", 'SerialPort shell started...')
 to_node("debug", 'Waiting Ardunio to connect on port...')
-
-LF = '\n'
-CR = '\r'
 
 # https://stackoverflow.com/a/14224477/5685796
 def get_serial_ports():
