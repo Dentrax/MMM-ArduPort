@@ -9,8 +9,11 @@ import json
 import threading
 import datetime
 import re
+import glob
+import serial
 
-from serial import Serial
+import arduino
+
 
 def to_node(type, message):
     try:
@@ -22,58 +25,88 @@ def to_node(type, message):
 
 to_node("debug", 'SerialPort shell started...')
 
-connected = False
-serialPortName = '/dev/ttyUSB0'
-serialBaudRate = 9600
+LF = '\n'
+CR = '\r'
 
 rgxCase = re.compile("^(^[a-zA-Z]*)$")
 
-to_node("debug", 'Waiting ardunio to connect on /dev/ttyUSB0...')
+to_node("debug", 'Waiting Ardunio to connect on port...')
 
-while not connected:
-    connected = os.path.exists("/dev/ttyUSB0")
-    if connected:
-        break
-    time.sleep(1)
+# https://stackoverflow.com/a/14224477/5685796
+def get_serial_ports():
+    if sys.platform.startswith('win'):
+        ports = ['COM%s' % (i + 1) for i in range(256)]
+    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+        ports = glob.glob('/dev/tty[A-Za-z]*')
+    elif sys.platform.startswith('darwin'):
+        ports = glob.glob('/dev/tty.*')
+    else:
+        raise EnvironmentError('Unsupported platform')
 
-ser = Serial(
-    port = serialPortName,
-    baudrate = serialBaudRate,
-    timeout = 5,
-    xonxoff = False,
-    rtscts = False,
-    dsrdtr = False,
-    writeTimeout = 2
-)
+    result = []
+    for port in ports:
+        try:
+            s = serial.Serial(port)
+            s.close()
+            result.append(port)
+        except (OSError, serial.SerialException):
+            pass
+    return result
 
-def open_port(serial, max_attempt = 3):
-  attempt = 0
+def start_scanner():
+    con_list = {}
 
-  while True:
-    try:
-        if not ser.isOpen():
-            ser.open()
-        if ser.isOpen():
-            ser.flushInput()
-            ser.flushOutput()
-            return True
-        if not ser.isOpen():
-            continue
-    except Exception as e:
-        attempt = attempt + 1
-        if attempt == max_attempt:
-            return False
+    while True:
+        # Scan all ports
+        ports = get_serial_ports()
 
-    time.sleep(1)
+        # If a device connected
+        if len(ports) > 0:
 
+            # For-Loop in the scanned ports
+            for current in ports:
+
+                # New Arduino is connected
+                # Register to con_list
+                # Returns False because we don't connect yet
+                if current not in con_list:
+                    con_list[current] = False
+
+                # Arduino is connected
+                if current in con_list and con_list[current] == False:
+                    con = arduino.Arduino(current, 9600)
+                    if con.open(max_attempt = 5):
+                        con_list[current] = True
+                        to_node("status", {"name": "connect", "data": "connected"})
+
+                # Arduino in con_list, nothing to do
+                elif current in con_list and con_list[current] == True:
+                    continue
+
+
+        # Any Arduino connected, set them all False
+        # We are not goint to clean the list because we will check if it is connected again
+        elif len(con_list) > 0:
+            for con in con_list:
+                if con_list[con] == True:
+                    con_list[con] = False
+                    to_node("status", {"name": "connect", "data": "disconnected"})
+
+        time.sleep(1)
+
+scanner = threading.Thread(target = start_scanner)
+scanner.start()
 
 def on_data_received(data):
-    case, name, value = data.split(":")
+    #Get string between '[' and ']' for safe parsing using Regex
+    count = re.search('\[(.*?)\]', data)
+    if count:
+        res = count.group(1)
+        if res:
+            case, name, value = res.split(":")
 
-    if rgxCase.match(case):
-        to_node(case.lower(), {"name": name, "data": value})
-
-    #to_node("sensor", {"name": "MQ2", "data": str(datetime.datetime.now().time().second)})
+            if rgxCase.match(case):
+                to_node(case.lower(), {"name": name, "data": value})
 
 def read_from_port(ser):
     while True:
@@ -81,7 +114,7 @@ def read_from_port(ser):
             connected = ser.isOpen()
             if (connected):
                 if (ser.readable() and ser.in_waiting > 0):
-                    incoming = ser.read(ser.in_waiting).decode('ascii')
+                    incoming = ser.readline(ser.in_waiting).decode('ascii').replace('\r', '').replace('\n', '')
                     on_data_received(incoming)
             else:
                 to_node("status", {"name": "connect", "data": "disconnected"})
@@ -93,11 +126,6 @@ def read_from_port(ser):
 
         time.sleep(0.1)
 
-if open_port(ser, 3):
-    connected = True
-    to_node("status", {"name": "connect", "data": "connected"})
 
-    time.sleep(1)
-
-    thread = threading.Thread(target=read_from_port, args=(ser,))
-    thread.start()
+#    thread = threading.Thread(target=read_from_port, args=(ser,))
+ #   thread.start()
