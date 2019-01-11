@@ -402,6 +402,17 @@ void loop() {
 }
 ```
 
+## Known Issues
+
+* Do not use `Serial.print()` instead of `Serial.println()` (Not supported yet)
+
+- ISSUE: When the Arduino's reset button is pressed, sometimes the connection is terminated.
+- FIX:
+1. Disconnect the Arduino from the PC
+2. Close the MagicMirror
+3. Re-open the MagicMirror again
+4. Connect Arduino to PC again
+
 ## License
 
 ### The MIT License (MIT)
