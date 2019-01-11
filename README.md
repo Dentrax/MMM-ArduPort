@@ -77,7 +77,7 @@ var config = {
   <tbody>
     <tr>
       <td><code>portname</code></td>
-      <td><strong>REQUIRED</strong>The port name to which the Arduino will be connected<br><br><strong>Example:</strong> <code>"/dev/ttyUSB0"</code></td>
+      <td><strong>REQUIRED</strong><br>The port name to which the Arduino will be connected<br><br><strong>Example:</strong> <code>"/dev/ttyUSB0"</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
@@ -113,9 +113,9 @@ var config = {
     </tr>
     <tr>
       <td><code>sensors</code></td>
-      <td><strong>REQUIRED</strong>Sensor array to be used in the module<br><br></td>
+      <td><strong>REQUIRED</strong><br>Sensor array to be used in the module<br><br></td>
       <td>array</td>
-      <td>NULL</td>
+      <td><code>NULL</code></td>
     </tr>
   </tbody>
 </table>
@@ -134,85 +134,85 @@ Each object in the `sensors` array can have the following parameters:
   <tbody>
     <tr>
       <td><code>name</code></td>
-      <td><strong>REQUIRED</strong>The name of the sensor (case-sensitive, no space)<br><br><strong>Example:</strong> <code>"HCSR04"</code></td>
+      <td><strong>REQUIRED</strong><br>The name of the sensor (case-sensitive, no space)<br><br><strong>Example:</strong> <code>"HCSR04"</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>description</code></td>
-      <td>If <code>showDescription</code> = <code>true</code>Description shown under the sensor</td>
+      <td>If <code>showDescription</code> = <code>true</code> description shown under the sensor<br><br><strong>Example:</strong> <code>"My awesome description"</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>maxValue</code></td>
-      <td>MAXIMUM value that the sensor can produce<br></td>
+      <td>MAXIMUM value that the sensor can produce<br><br></td>
       <td>integer</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>maxFormat</code></td>
-      <td>To format the string shown on the screen<br><strong>Example:</strong> <code>({0}) MAX</code></td>
+      <td>To format the string shown on the screen<br><br><strong>Example:</strong> <code>({0}) MAX</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>highestValue</code></td>
-      <td>HIGHEST value that the sensor can produce<br></td>
+      <td>HIGHEST value that the sensor can produce<br><br></td>
       <td>integer</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>highestFormat</code></td>
-      <td>To format the string shown on the screen<br><strong>Example:</strong> <code>({0}) HIGHEST</code></td>
+      <td>To format the string shown on the screen<br><br><strong>Example:</strong> <code>({0}) HIGHEST</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>highValue</code></td>
-      <td>HIGH value that the sensor can produce<br></td>
+      <td>HIGH value that the sensor can produce<br><br></td>
       <td>integer</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>highFormat</code></td>
-      <td>To format the string shown on the screen<br><strong>Example:</strong> <code>({0}) HIGH</code></td>
+      <td>To format the string shown on the screen<br><br><strong>Example:</strong> <code>({0}) HIGH</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>lowValue</code></td>
-      <td>LOW value that the sensor can produce<br></td>
+      <td>LOW value that the sensor can produce<br><br></td>
       <td>integer</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>lowFormat</code></td>
-      <td>To format the string shown on the screen<br><strong>Example:</strong> <code>({0}) LOW</code></td>
+      <td>To format the string shown on the screen<br><br><strong>Example:</strong> <code>({0}) LOW</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>lowestValue</code></td>
-      <td>LOWEST value that the sensor can produce<br></td>
+      <td>LOWEST value that the sensor can produce<br><br></td>
       <td>integer</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>lowestFormat</code></td>
-      <td>To format the string shown on the screen<br><strong>Example:</strong> <code>({0}) LOWEST</code></td>
+      <td>To format the string shown on the screen<br><br><strong>Example:</strong> <code>({0}) LOWEST</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>minValue</code></td>
-      <td>MINIMUM value that the sensor can produce<br></td>
+      <td>MINIMUM value that the sensor can produce<br><br></td>
       <td>integer</td>
       <td><code>NULL</code></td>
     </tr>
     <tr>
       <td><code>minFormat</code></td>
-      <td>To format the string shown on the screen<br><strong>Example:</strong> <code>({0}) MIN</code></td>
+      <td>To format the string shown on the screen<br><br><strong>Example:</strong> <code>({0}) MIN</code></td>
       <td>string</td>
       <td><code>NULL</code></td>
     </tr>
@@ -311,7 +311,7 @@ In order to start the module, the Arduino's `setup()` function must be completed
 
 - To send `failed` signal: `[status:setup:failed]`
 
-Example:
+* Example:
 
 ```
 Serial.println("[status:setup:starting]");
@@ -323,7 +323,7 @@ Serial.println("[status:setup:started]");
 
 * IMPORTANT: The signal command you send must be registered as name in the `sensors` array.
 
-Example:
+* Example:
 ```
                 sensors: [
                     {
@@ -339,7 +339,7 @@ Example:
 
 To transmit a sensor data to the module: `[sensor:SENSOR_NAME:SENSOR_VALUE]`
 
-Example:
+* Example:
 
 ```
 Serial.println("[sensor:MQ2:19]");
