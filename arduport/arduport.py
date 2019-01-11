@@ -8,7 +8,6 @@ import stat
 import json
 import threading
 import datetime
-import re
 import glob
 import serial
 
@@ -24,13 +23,10 @@ def to_node(type, message):
     sys.stdout.flush()
 
 to_node("debug", 'SerialPort shell started...')
+to_node("debug", 'Waiting Ardunio to connect on port...')
 
 LF = '\n'
 CR = '\r'
-
-rgxCase = re.compile("^(^[a-zA-Z]*)$")
-
-to_node("debug", 'Waiting Ardunio to connect on port...')
 
 # https://stackoverflow.com/a/14224477/5685796
 def get_serial_ports():
@@ -79,6 +75,9 @@ def start_scanner():
                         con_list[current] = True
                         to_node("status", {"name": "connect", "data": "connected"})
 
+                        thread = threading.Thread(target = con.start_serial())
+                        thread.start()
+
                 # Arduino in con_list, nothing to do
                 elif current in con_list and con_list[current] == True:
                     continue
@@ -96,36 +95,3 @@ def start_scanner():
 
 scanner = threading.Thread(target = start_scanner)
 scanner.start()
-
-def on_data_received(data):
-    #Get string between '[' and ']' for safe parsing using Regex
-    count = re.search('\[(.*?)\]', data)
-    if count:
-        res = count.group(1)
-        if res:
-            case, name, value = res.split(":")
-
-            if rgxCase.match(case):
-                to_node(case.lower(), {"name": name, "data": value})
-
-def read_from_port(ser):
-    while True:
-        try:
-            connected = ser.isOpen()
-            if (connected):
-                if (ser.readable() and ser.in_waiting > 0):
-                    incoming = ser.readline(ser.in_waiting).decode('ascii').replace('\r', '').replace('\n', '')
-                    on_data_received(incoming)
-            else:
-                to_node("status", {"name": "connect", "data": "disconnected"})
-                return
-        except OSError as e:
-            connected = False
-            to_node("status", {"name": "connect", "data": "disconnected"})
-            break
-
-        time.sleep(0.1)
-
-
-#    thread = threading.Thread(target=read_from_port, args=(ser,))
- #   thread.start()
