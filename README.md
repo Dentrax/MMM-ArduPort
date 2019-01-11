@@ -301,7 +301,7 @@ Serial.println("[COMMAND:NAME:DATA]")
 
 ### Starting the module
 
-**IMPORTANT:*** Do not any send sensor data in the `setup()` function.
+**IMPORTANT:** Do not any send sensor data in the `setup()` function.
 
 In order to start the module, the Arduino's `setup()` function must be completed.
 
@@ -323,7 +323,7 @@ Serial.println("[status:setup:started]");
 
 **IMPORTANT:** The signal command you send must be registered as name in the `sensors*** array.
 
-**Example***
+**Example**
 ```
                 sensors: [
                     {
