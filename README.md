@@ -301,7 +301,7 @@ Serial.println("[COMMAND:NAME:DATA]")
 
 ### Starting the module
 
-* IMPORTANT: Do not any send sensor data in the `setup()` function.
+**IMPORTANT:*** Do not any send sensor data in the `setup()` function.
 
 In order to start the module, the Arduino's `setup()` function must be completed.
 
@@ -309,9 +309,9 @@ In order to start the module, the Arduino's `setup()` function must be completed
 
 - To send `started` signal: `[status:setup:started]`
 
-- To send `failed` signal: `[status:setup:failed]`
+- To send `failed` signal: `[status:setup:failed]**
 
-* Example:
+**Example:**
 
 ```
 Serial.println("[status:setup:starting]");
@@ -321,9 +321,9 @@ Serial.println("[status:setup:started]");
 
 ### Sending data to module
 
-* IMPORTANT: The signal command you send must be registered as name in the `sensors` array.
+**IMPORTANT:** The signal command you send must be registered as name in the `sensors*** array.
 
-* Example:
+**Example***
 ```
                 sensors: [
                     {
@@ -337,9 +337,9 @@ Serial.println("[status:setup:started]");
                     },
 ```
 
-To transmit a sensor data to the module: `[sensor:SENSOR_NAME:SENSOR_VALUE]`
+To transmit a sensor data to the module: `[sensor:SENSOR_NAME:SENSOR_VALUE]**
 
-* Example:
+**Example:**
 
 ```
 Serial.println("[sensor:MQ2:19]");
@@ -404,15 +404,16 @@ void loop() {
 
 ## Known Issues
 
-* Do not use `Serial.print()` instead of `Serial.println()` (Not supported yet)
+**Do not use `Serial.print()` instead of `Serial.println()` (Not supported yet)**
 
 - ISSUE: When the Arduino's reset button is pressed, sometimes the connection is terminated.
 - FIX:
+```
 1. Disconnect the Arduino from the PC
 2. Close the MagicMirror
 3. Re-open the MagicMirror again
 4. Connect Arduino to PC again
-
+```
 ## License
 
 ### The MIT License (MIT)
