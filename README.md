@@ -3,6 +3,8 @@ This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror
 
 This module provides Arduino serial communication support with Raspberry PI.
 
+I created this module for my project real-time [ArduRMMMQ](https://github.com/Dentrax/ArduRMMMQ) project.
+
 | Status  | Version | Date       | Maintained? | Minimum MagicMirror² Version |
 |:------- |:------- |:---------- |:----------- |:---------------------------- |
 | Working | `1.0.0` | 2019-01-11 | Yes         |`2.0.0`                       |
