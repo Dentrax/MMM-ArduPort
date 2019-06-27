@@ -34,7 +34,7 @@ cd ~/MagicMirror/modules
 
 2. Clone the module to your computer by executing the following command:
 ```
-git clone https://github.com/glitch452/MMM-LocalTemperature.git
+git clone https://github.com/Dentrax/MMM-ArduPort.git
 ```
 
 3. Install the `python-shell` library by executing the following command:
