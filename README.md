@@ -23,6 +23,8 @@ I created this module for my project real-time [ArduRMMMQ](https://github.com/De
 
 - [python-shell](https://www.npmjs.com/package/python-shell)
 
+- [pyserial](https://pypi.org/project/pyserial)
+
 ## Installation
 
 To install the module, use your terminal to:
