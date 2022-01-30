@@ -247,14 +247,15 @@ Module.register("MMM-ArduPort", {
                     errorTxt.innerHTML = "Error";
                     row.appendChild(errorTxt);
                 } else {
-                    row.appendChild(this.formatValue(sensor.value, sensor));
-
+                    var val = document.createElement("span");
+                    val.classList.add("port-data");
+                    
+                    if(sensor.name == "LM35") {val.innerHTML = sensor.value + " °C";}
+                    if(sensor.name == "MQ2") {val.innerHTML = sensor.value + " %";}
+                    if(sensor.name == "HCSR04") {val.innerHTML = sensor.value + " cm";}
+                    row.appendChild(val);
                     if (this.config.showDescription) {
-                        var description = document.createElement("div");
-                        description.classList.add("sensor-description");
-
-                        description.innerHTML = sensor.description;
-                        row.appendChild(description);
+                    var description = document.createElement("div");
                     }
                 }
 
