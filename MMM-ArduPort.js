@@ -10,7 +10,7 @@ Module.register("MMM-ArduPort", {
     logPrefix: '[MMM-ArduPort]:: ',
 
     defaults: {
-        portname: "/dev/ttyUSB0",
+        portname: "COM4",
         updateInterval: 1, //second
 		    animationSpeed: 1000,
         displayIcons: true,
@@ -133,12 +133,12 @@ Module.register("MMM-ArduPort", {
         }
     },
 
-    formatValue: function(value, sensor) {
+/*     formatValue: function(value, sensor) {
         var self = this;
 
         var val = document.createElement("span");
         val.classList.add("port-data");
-
+        
         if (value != null) {
             val.innerHTML = "({0}) ".format(value);
 
@@ -190,13 +190,13 @@ Module.register("MMM-ArduPort", {
                 }
             }
         } else {
-            val.innerHTML = self.translate("ARDUINO_WAITING_DATA");
-            val.classList.add("value-waiting");
+            val.innerHTML = JSON.stringify(value);
+            
         }
 
 
         return val;
-    },
+    }, */
 
     getSensorIcon: function(sensor) {
 
@@ -247,8 +247,25 @@ Module.register("MMM-ArduPort", {
                     errorTxt.innerHTML = "Error";
                     row.appendChild(errorTxt);
                 } else {
-                    row.appendChild(this.formatValue(sensor.value, sensor));
+                    var val = document.createElement("span");
+                    val.classList.add("port-data");
+                    value = sensor.value;
+                    if (value != null) {
+                       
+            
+                        if (sensor.maxFormat != undefined){
+                            val.innerHTML = sensor.value + sensor.maxFormat;
 
+                            } else {
+                                val.innerHTML = sensor.value + "UNKNOWN";
+                            }
+                        
+                    } else {
+                        val.innerHTML = JSON.stringify(value);
+                        
+                    }
+
+                    row.appendChild(val);
                     if (this.config.showDescription) {
                         var description = document.createElement("div");
                         description.classList.add("sensor-description");
